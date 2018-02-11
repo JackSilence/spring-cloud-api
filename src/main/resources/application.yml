@@ -1,0 +1,23 @@
+spring:
+  application:
+    name: cloud-api
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://peer1:8761/eureka/,http://peer2:8762/eureka/
+management:
+  security:
+    enabled: false
+logging:
+  level:
+    root: info
+---
+spring:
+  profiles: api1
+server:
+  port: 8763
+---
+spring:
+  profiles: api2
+server:
+  port: 8764
