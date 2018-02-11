@@ -9,8 +9,6 @@ import org.springframework.cloud.client.serviceregistry.Registration;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.google.common.collect.ImmutableMap;
-
 @RestController
 public class DemoController {
 	@Autowired
@@ -18,11 +16,6 @@ public class DemoController {
 
 	@Autowired
 	private DiscoveryClient discoveryClient;
-
-	@GetMapping( "/get" )
-	public ImmutableMap<String, String> get() {
-		return ImmutableMap.of( "key", "value" );
-	}
 
 	@GetMapping( "/instance-info" )
 	public ServiceInstance showInfo() {
