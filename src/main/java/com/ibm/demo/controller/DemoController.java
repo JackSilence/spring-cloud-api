@@ -19,6 +19,7 @@ public class DemoController {
 
 	@GetMapping( "/instance-info" )
 	public ServiceInstance showInfo() {
+		// DiscoveryClient的getLocalServiceInstance方法已被標註為@Deprecated, 建議不要使用
 		List<ServiceInstance> list = discoveryClient.getInstances( registration.getServiceId() );
 
 		return list.isEmpty() ? null : list.get( 0 );
