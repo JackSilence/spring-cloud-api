@@ -1,0 +1,25 @@
+spring:
+  application:
+    name: cloud-api
+  cloud:
+    config:
+      label: master
+      discovery:
+        enabled: true #預設false, 設為true表示使用註冊中心的configserver配置不用自己設定configserver的uri
+        serviceId: cloud-config  #指定config server在服務發現中的serviceId, 預設為configserver
+eureka:
+  client:
+    service-url:
+      defaultZone: http://peer1:8761/eureka/,http://peer2:8762/eureka/
+---
+spring:
+  profiles: api1
+  cloud:
+    config:
+      profile: api1
+---
+spring:
+  profiles: api2
+  cloud:
+    config:
+      profile: api2
