@@ -1,6 +1,7 @@
 package com.ibm.demo.controller;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
@@ -22,6 +23,9 @@ public class DemoController {
 	@Value( "${test.message:}" )
 	private String message;
 
+	@Value( "${server.port}" )
+	private int port;
+
 	@Autowired
 	private Registration registration;
 
@@ -32,9 +36,12 @@ public class DemoController {
 	public ServiceInstance showInfo() {
 		log.info( "Message: " + message + ", is empty: " + StringUtils.isEmpty( message ) );
 
-		// DiscoveryClient的getLocalServiceInstance方法已被標註為@Deprecated, 建議不要使用
 		List<ServiceInstance> list = discoveryClient.getInstances( registration.getServiceId() );
 
-		return list.isEmpty() ? null : list.get( 0 );
+		// 注意! 當有HA時, 相同service id拿到的list順序是不定的, 不同時間的順序也可能不同
+		log.info( "Uri: " + list.stream().map( ServiceInstance::getUri ).collect( Collectors.toList() ) );
+
+		// DiscoveryClient的getLocalServiceInstance方法已被標註為@Deprecated, 建議不要使用
+		return list.stream().filter( i -> i.getPort() == port ).findFirst().orElse( null );
 	}
 }
