@@ -4,6 +4,7 @@ management:
 logging:
   level:
     root: info
+# mybatis + h2: https://blog.csdn.net/qq_33854869/article/details/79002230
 spring:
   datasource:
     schema: classpath:db/schema.sql
