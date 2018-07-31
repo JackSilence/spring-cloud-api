@@ -4,3 +4,18 @@ management:
 logging:
   level:
     root: info
+spring:
+  datasource:
+    schema: classpath:db/schema.sql
+    data: classpath:db/data.sql
+    url: jdbc:h2:mem:testdbsa
+    driver-class-name: org.h2.Driver
+    username: sa
+    password: 
+  h2:
+    console:
+      settings:
+        web-allow-others: true
+        trace: true
+      path: /h2-console
+      enabled: true

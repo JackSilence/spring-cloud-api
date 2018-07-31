@@ -15,6 +15,8 @@ import org.springframework.cloud.context.config.annotation.RefreshScope;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.ibm.demo.mapper.CityMapper;
+
 @RestController
 @RefreshScope
 public class DemoController {
@@ -32,8 +34,14 @@ public class DemoController {
 	@Autowired
 	private DiscoveryClient discoveryClient;
 
+	@Autowired
+	private CityMapper cityMapper;
+
 	@GetMapping( "/instance-info" )
 	public ServiceInstance showInfo() {
+		System.out.println( cityMapper.findByState( "CA" ) );
+		System.out.println( cityMapper.selectCityById( 1 ) );
+
 		log.info( "Message: " + message + ", is empty: " + StringUtils.isEmpty( message ) );
 
 		// DiscoveryClient的getLocalServiceInstance方法已被標註為@Deprecated, 建議不要使用
