@@ -6,4 +6,8 @@
 	<select id="selectCityById" resultType="com.ibm.demo.model.City">
      SELECT * FROM CITY WHERE ID = #{id}
 	</select>
+
+	<update id="updateCityById">
+     UPDATE CITY SET COUNTRY = NULL WHERE ID = #{id}
+	</update>
 </mapper>

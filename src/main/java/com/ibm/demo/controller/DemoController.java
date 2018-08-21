@@ -12,6 +12,7 @@ import org.springframework.cloud.client.ServiceInstance;
 import org.springframework.cloud.client.discovery.DiscoveryClient;
 import org.springframework.cloud.client.serviceregistry.Registration;
 import org.springframework.cloud.context.config.annotation.RefreshScope;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -51,5 +52,13 @@ public class DemoController {
 		log.info( "Uri: " + list.stream().map( ServiceInstance::getUri ).collect( Collectors.toList() ) );
 
 		return list.stream().filter( i -> i.getPort() == port ).findFirst().orElse( null );
+	}
+
+	@GetMapping( "/transaction" )
+	@Transactional
+	public void transaction() {
+		log.info( "Result: " + cityMapper.updateCityById( 1 ) );
+
+		throw new RuntimeException( "Rollback!" );
 	}
 }
